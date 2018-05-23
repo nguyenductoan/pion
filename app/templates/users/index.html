@@ -1,0 +1,27 @@
+{% extends 'layouts/application_layout.html' %}
+{% block content %}
+  <h1>List of Users</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>email</th>
+        <th>first_name</th>
+        <th>last_name</th>
+        <th>address</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+      <tr>
+        <td>{{user.id}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.first_name}}</td>
+        <td>{{user.last_name}}</td>
+        <td>{{user.address}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
+
