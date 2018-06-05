@@ -3,7 +3,7 @@ from views.users import *
 
 class UsersController(BaseController):
 
-    def index(self):
+    def index(self, params):
         users_query = UsersQuery()
         users = users_query.all()
 

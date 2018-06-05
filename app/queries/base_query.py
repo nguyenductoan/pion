@@ -25,3 +25,9 @@ class BaseQuery():
         session.close()
         return orders_query.all()
 
+    def filter_by_user_id(self, class_name, user_id):
+        session = session_factory()
+        orders_query = session.query(class_name).filter_by(user_id=user_id)
+        session.close()
+        return orders_query.all()
+
