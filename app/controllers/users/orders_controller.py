@@ -4,9 +4,9 @@ from views.users.orders import *
 class OrdersController(BaseController):
 
     def index(self, params):
-        user_id = params['users_id']
+        conditions = {'user_id': params['users_id']}
         orders_query = OrdersQuery()
-        orders = orders_query.filter_by_user_id(user_id)
+        orders = orders_query.filter_by(conditions)
 
         context = {}
         context['orders'] = orders

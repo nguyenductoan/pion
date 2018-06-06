@@ -1,7 +1,7 @@
 from sqlalchemy import create_engine, exists
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-
+import pdb
 from model import *
 
 engine = create_engine('mysql+mysqldb://root@localhost/lixibox')
@@ -13,21 +13,33 @@ def session_factory():
 
 class BaseQuery():
 
-    def all(self, class_name, limit=1000):
+    def all(self, limit=1000):
         session = session_factory()
-        orders_query = session.query(class_name).limit(limit)
+        query = session.query(self.model)
+        query = query.limit(limit)
         session.close()
-        return orders_query.all()
+        return query.all()
 
-    def find(self, class_name, id):
+    def find(self, id):
         session = session_factory()
-        orders_query = session.query(class_name).filter_by(id=id)
+        query = session.query(self.model)
+        query = query.filter_by(id=id)
         session.close()
-        return orders_query.all()
+        return query.all()
 
-    def filter_by_user_id(self, class_name, user_id):
+    def filter_by(self, conditions):
         session = session_factory()
-        orders_query = session.query(class_name).filter_by(user_id=user_id)
+        query = session.query(self.model)
+        for key, value in conditions.items():
+            query = query.filter(getattr(self.model, key) == value)
         session.close()
-        return orders_query.all()
+        return query.all()
+
+    def plain_sql(self, statement, params):
+        session = session_factory()
+        # Ex: statement: 'SELECT * FROM orders WHERE orders.id < :val'
+        # params: { 'val': 50 }
+        query = session.execute(statement, params)
+        session.close()
+        return query.fetchall()
 
