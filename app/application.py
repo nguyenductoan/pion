@@ -1,5 +1,5 @@
 import MySQLdb as sql
-import pdb
+from pdb import *
 from dao import *
 from model import *
 from queries import *
