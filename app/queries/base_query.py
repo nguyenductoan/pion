@@ -1,7 +1,6 @@
 from sqlalchemy import create_engine, exists
 from sqlalchemy.orm import relationship, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
-import pdb
 from model import *
 
 engine = create_engine('mysql+mysqldb://root@localhost/lixibox')
